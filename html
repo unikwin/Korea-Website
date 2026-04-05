@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seoul Trip · 서울 여행</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1612;
+    --red: #C8392B;
+    --red-light: #F0E8E6;
+    --gold: #B8945A;
+    --gold-light: #F5EDD8;
+    --gray: #8A8278;
+    --gray-light: #EAE6DF;
+    --white: #FDFBF7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--ink);
+    color: var(--white);
+    padding: 60px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '서울';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 180px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+
+  .header-title-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.05em;
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* SECTION HEADER */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(26,22,18,0.12);
+  }
+
+  .section-en {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--ink);
+  }
+
+  .section-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    color: var(--gray);
+    font-weight: 400;
+  }
+
+  /* DAY CARD */
+  .day-block {
+    margin-bottom: 48px;
+  }
+
+  .day-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .day-num {
+    width: 40px;
+    height: 40px;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .day-title-wrap {}
+  .day-title-en {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .day-title-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    color: var(--gray);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .day-date {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 64px 1px 1fr;
+    gap: 0 20px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .tl-time {
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 24px;
+  }
+
+  .tl-time-en {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+  }
+
+  .tl-time-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 10px;
+    color: var(--gray);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .tl-line-col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot.red { background: var(--red); }
+  .tl-dot.gray { background: var(--gray-light); border: 1px solid var(--gray); }
+
+  .tl-vert {
+    flex: 1;
+    width: 1px;
+    background: var(--gray-light);
+    min-height: 20px;
+  }
+
+  .tl-item:last-child .tl-vert { display: none; }
+
+  .tl-content {
+    padding-bottom: 24px;
+  }
+
+  .tl-title-en {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .tl-title-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+
+  .tl-note {
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 5px;
+  }
+
+  .tl-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+
+  .chip {
+    font-size: 10px;
+    padding: 2px 9px;
+    border-radius: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .chip-travel { background: var(--gray-light); color: var(--gray); }
+  .chip-tip { background: var(--gold-light); color: #7A5C2E; }
+  .chip-food { background: #E8F0E8; color: #3A6B3A; }
+  .chip-key { background: var(--red-light); color: var(--red); }
+
+  /* DIVIDER */
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(26,22,18,0.08);
+    margin: 48px 0;
+  }
+
+  /* HOTELS */
+  .hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .hotel-card {
+    background: var(--white);
+    border: 1px solid rgba(26,22,18,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hotel-card.featured {
+    border-color: var(--gold);
+  }
+
+  .hotel-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gray-light);
+  }
+
+  .hotel-card.featured::before {
+    background: var(--gold);
+  }
+
+  .hotel-badge {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .hotel-badge.gray { color: var(--gray); }
+
+  .hotel-name-en {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+
+  .hotel-name-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+
+  .hotel-price {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .hotel-price span {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 300;
+  }
+
+  .hotel-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .hotel-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .hotel-detail-key { color: var(--gray); }
+  .hotel-detail-val { font-weight: 500; color: var(--ink); }
+
+  .hotel-perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .perk {
+    font-size: 10px;
+    background: var(--gray-light);
+    color: var(--gray);
+    border-radius: 8px;
+    padding: 2px 8px;
+  }
+
+  .perk.gold { background: var(--gold-light); color: #7A5C2E; }
+
+  /* KTX BOX */
+  .ktx-box {
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-top: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ktx-box::after {
+    content: '🚄';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    opacity: 0.15;
+  }
+
+  .ktx-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .ktx-route {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .ktx-route-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 16px;
+  }
+
+  .ktx-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .ktx-stat-key {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 3px;
+  }
+
+  .ktx-stat-val {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .ktx-note {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+
+  .ktx-note strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+
+  /* FOOTER NOTE */
+  .footer-note {
+    margin-top: 48px;
+    padding: 20px 24px;
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    font-size: 12px;
+    color: #6B4E20;
+    line-height: 1.7;
+  }
+
+  .footer-note strong { font-weight: 500; }
+
+  @media (max-width: 600px) {
+    .header { padding: 40px 24px 36px; }
+    .tl-item { grid-template-columns: 52px 1px 1fr; gap: 0 14px; }
+    .ktx-grid { grid-template-columns: 1fr 1fr; }
+    .header::before { font-size: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Trip Itinerary · 여행 일정</div>
+  <div class="header-title">Seoul, Korea</div>
+  <div class="header-title-kr">대한민국 서울</div>
+  <div class="header-meta">
+    <span class="meta-pill">Apr 27–29, 2025 · 4월 27–29일</span>
+    <span class="meta-pill">2 nights · 2박 3일</span>
+    <span class="meta-pill">Myeongdong base · 명동</span>
+    <span class="meta-pill">KTX to Jinju · 진주행 KTX</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- DAY 1 -->
+  <div class="day-block">
+    <div class="day-label">
+      <div class="day-num">1</div>
+      <div class="day-title-wrap">
+        <div class="day-title-en">Arrival · Insadong · Seongsu Night</div>
+        <div class="day-title-kr">도착 · 인사동 · 성수동 야경</div>
+      </div>
+      <div class="day-date">Sun Apr 27<br>일요일 4월 27일</div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">5:50 PM</span><span class="tl-time-kr">오후 5시 50분</span></div>
+        <div class="tl-line-col"><div class="tl-dot gray"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Land at Incheon Airport</div>
+          <div class="tl-title-kr">인천국제공항 도착</div>
+          <div class="tl-chips"><span class="chip chip-travel">Airport Bus 6015 → Myeongdong · ~70 min · 공항버스 6015번</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">7:30 PM</span><span class="tl-time-kr">오후 7시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot gray"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Hotel Check-in · Freshen Up</div>
+          <div class="tl-title-kr">호텔 체크인 · 짐 풀기</div>
+          <div class="tl-note">Drop bags, change, get ready · 짐 맡기고 준비하기</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">8:00 PM</span><span class="tl-time-kr">오후 8시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Dinner with Sister · Insadong</div>
+          <div class="tl-title-kr">언니와 저녁 식사 · 인사동</div>
+          <div class="tl-note">Tea houses, traditional restaurants · 찻집, 전통 음식점</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway Line 3 → Anguk · 10 min · 3호선 안국역 · 10분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">9:30 PM</span><span class="tl-time-kr">오후 9시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Seongsu Night Cafés</div>
+          <div class="tl-title-kr">성수동 야간 카페 투어</div>
+          <div class="tl-note">Converted factory cafés · trendy night energy · 공장 개조 카페 · 트렌디한 야경</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway from Insadong · 20 min · 인사동에서 20분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">10:30 PM</span><span class="tl-time-kr">오후 10시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Ttukseom Hangang Park</div>
+          <div class="tl-title-kr">뚝섬 한강공원</div>
+          <div class="tl-note">Convenience store ramen + sit by the river · K-drama couple moment · 편의점 라면 + 한강 피크닉</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk from Seongsu · 15 min · 성수에서 도보 15분</span><span class="chip chip-tip">Buy at GS25 or CU · GS25 또는 CU에서 구매</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">12:00 AM</span><span class="tl-time-kr">자정 12시</span></div>
+        <div class="tl-line-col"><div class="tl-dot gray"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Return to Hotel</div>
+          <div class="tl-title-kr">호텔 귀환</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway · ~30 min · 지하철 30분</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- DAY 2 -->
+  <div class="day-block">
+    <div class="day-label">
+      <div class="day-num">2</div>
+      <div class="day-title-wrap">
+        <div class="day-title-en">Hanbok · Culture · Myeongdong · Seoul Tower</div>
+        <div class="day-title-kr">한복 · 문화 · 명동 · N서울타워</div>
+      </div>
+      <div class="day-date">Mon Apr 28<br>월요일 4월 28일</div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">8:30 AM</span><span class="tl-time-kr">오전 8시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Hanbok Rental · Gyeongbokgung</div>
+          <div class="tl-title-kr">한복 대여 · 경복궁</div>
+          <div class="tl-note">Oneday Hanbok or Hanboknam near palace gate · 궁 입구 근처 한복 대여점 · 30 min to dress</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway Line 3 → Gyeongbokgung · 20 min · 3호선 경복궁역 · 20분</span><span class="chip chip-tip">Free palace entry in hanbok · 한복 착용 시 무료 입장</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">9:30 AM</span><span class="tl-time-kr">오전 9시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Gyeongbokgung Palace Photos</div>
+          <div class="tl-title-kr">경복궁 사진 촬영</div>
+          <div class="tl-note">Best morning light for photos · 2 hrs · 오전 자연광 최적 · 2시간</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">11:30 AM</span><span class="tl-time-kr">오전 11시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Bukchon Hanok Village</div>
+          <div class="tl-title-kr">북촌한옥마을</div>
+          <div class="tl-note">Most iconic traditional alley photos in Seoul · 서울에서 가장 아름다운 전통 골목</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk · 10 min · 도보 10분</span><span class="chip chip-tip">Return hanbok here · 여기서 한복 반납</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">12:15 PM</span><span class="tl-time-kr">낮 12시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Nuldam Space — Letter to Future Self</div>
+          <div class="tl-title-kr">늘담 - 미래의 나에게 편지 쓰기</div>
+          <div class="tl-note">Café across from palace · write a letter · wax seal · mailed to you in 1 year · 1년 후 우편 발송</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk · 5 min · 도보 5분</span><span class="chip chip-tip">Hidden gem couple activity · 커플 숨은 명소</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">1:00 PM</span><span class="tl-time-kr">오후 1시</span></div>
+        <div class="tl-line-col"><div class="tl-dot red"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Gwangjang Market — Lunch</div>
+          <div class="tl-title-kr">광장시장 — 점심</div>
+          <div class="tl-note">Bindaetteok pancakes · mayak kimbap · yukhoe · 빈대떡 · 마약김밥 · 육회</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk · 10 min · 도보 10분</span><span class="chip chip-food">Most authentic market food in Seoul · 서울 최고의 시장 음식</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">2:00 PM</span><span class="tl-time-kr">오후 2시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Alive Museum — Trick Art Selfie Gallery</div>
+          <div class="tl-title-kr">얼라이브 뮤지엄 — 트릭아트 셀피 갤러리</div>
+          <div class="tl-note">Optical illusion photo experience · you become part of the art · 착시 사진 체험 · 인사동</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk · 5 min · 도보 5분</span><span class="chip chip-tip">~1 hr · Best couple photos · 커플 사진 명소</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">3:15 PM</span><span class="tl-time-kr">오후 3시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Ikseon-dong Café + Dessert</div>
+          <div class="tl-title-kr">익선동 카페 + 디저트</div>
+          <div class="tl-note">Hanok alley cafés · very aesthetic · 한옥 골목 카페 · 감성 충만</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk · 3 min · 도보 3분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">4:15 PM</span><span class="tl-time-kr">오후 4시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Samcheongdong Slow Walk</div>
+          <div class="tl-title-kr">삼청동 산책</div>
+          <div class="tl-note">Stone wall cafés · quiet upscale street · 돌담길 카페 · 고즈넉한 거리</div>
+          <div class="tl-chips"><span class="chip chip-travel">Walk · 10 min · 도보 10분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">5:00 PM</span><span class="tl-time-kr">오후 5시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Myeongdong — Shopping + Olive Young + Photo Booth</div>
+          <div class="tl-title-kr">명동 — 쇼핑 + 올리브영 + 포토부스</div>
+          <div class="tl-note">Street food · skincare · Life4Cuts photo booth · 길거리 음식 · 스킨케어 · 인생네컷</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway · 10 min · 지하철 10분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">6:15 PM</span><span class="tl-time-kr">오후 6시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Street Food Dinner + Cheonggyecheon Stream</div>
+          <div class="tl-title-kr">저녁 길거리 음식 + 청계천 산책</div>
+          <div class="tl-note">Lit stream near Myeongdong · romantic 20 min stroll · 청계천 야경 · 낭만적인 산책</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">7:15 PM</span><span class="tl-time-kr">오후 7시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">N Seoul Tower — Namsan</div>
+          <div class="tl-title-kr">N서울타워 — 남산</div>
+          <div class="tl-note">Cable car up · sunset + night panorama · love locks fence · 케이블카 탑승 · 야경 감상 · 자물쇠 담벼락</div>
+          <div class="tl-chips"><span class="chip chip-travel">Cable car from Myeongdong · 15 min · 케이블카 15분</span><span class="chip chip-tip">1.5 hrs here · 1시간 30분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">9:00 PM</span><span class="tl-time-kr">오후 9시</span></div>
+        <div class="tl-line-col"><div class="tl-dot gray"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Return to Hotel</div>
+          <div class="tl-title-kr">호텔 귀환</div>
+          <div class="tl-note">Walk down Namsan · 20 min OR cable car back · 남산 도보 하산 20분 또는 케이블카</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- DAY 3 -->
+  <div class="day-block">
+    <div class="day-label">
+      <div class="day-num">3</div>
+      <div class="day-title-wrap">
+        <div class="day-title-en">Museum · COEX · Garosu-gil · KTX</div>
+        <div class="day-title-kr">박물관 · 코엑스 · 가로수길 · KTX 출발</div>
+      </div>
+      <div class="day-date">Tue Apr 29<br>화요일 4월 29일</div>
+    </div>
+
+    <div style="font-size:11px;color:var(--gray);margin-bottom:16px;padding-left:84px;font-style:italic;">Leave luggage at hotel · pick up ~2:00 PM · 짐은 호텔에 맡기고 오후 2시에 찾기</div>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">8:00 AM</span><span class="tl-time-kr">오전 8시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Breakfast near hotel · Check-out</div>
+          <div class="tl-title-kr">호텔 근처 아침 식사 · 체크아웃</div>
+          <div class="tl-note">Store luggage at front desk · 프런트에 짐 맡기기</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">9:00 AM</span><span class="tl-time-kr">오전 9시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">National Museum of Korea</div>
+          <div class="tl-title-kr">국립중앙박물관</div>
+          <div class="tl-note">Free entry · one of the best museums in Asia · 6 permanent galleries · 무료 입장 · 아시아 최고의 박물관 중 하나</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway → Ichon · 15 min · 이촌역 · 15분</span><span class="chip chip-tip">2 hrs · opens 9am · 오전 9시 개관</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">11:00 AM</span><span class="tl-time-kr">오전 11시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">COEX Starfield Library + Underground Mall</div>
+          <div class="tl-title-kr">코엑스 별마당 도서관 + 지하 쇼핑몰</div>
+          <div class="tl-note">Giant bookshelf library photos · shopping · 거대한 책장 도서관 사진 촬영 · 쇼핑</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway → Samseong · 30 min · 삼성역 · 30분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">12:30 PM</span><span class="tl-time-kr">오후 12시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot red"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Lunch at COEX Food Hall</div>
+          <div class="tl-title-kr">코엑스 푸드홀 점심</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">1:15 PM</span><span class="tl-time-kr">오후 1시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Garosu-gil</div>
+          <div class="tl-title-kr">가로수길</div>
+          <div class="tl-note">Tree-lined boutique street · independent fashion · aesthetic cafés · 가로수 거리 · 독립 패션 샵 · 감성 카페</div>
+          <div class="tl-chips"><span class="chip chip-travel">Taxi from COEX · 10 min · 택시 10분</span><span class="chip chip-tip">~1 hr · relaxed pace · 여유롭게 1시간</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">2:15 PM</span><span class="tl-time-kr">오후 2시 15분</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Return to Hotel · Pick Up Luggage</div>
+          <div class="tl-title-kr">호텔로 귀환 · 짐 찾기</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway → Myeongdong · 20 min · 명동역 · 20분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">3:00 PM</span><span class="tl-time-kr">오후 3시</span></div>
+        <div class="tl-line-col"><div class="tl-dot"></div><div class="tl-vert"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">Head to Seoul Station</div>
+          <div class="tl-title-kr">서울역 이동</div>
+          <div class="tl-note">Grab train snacks inside station · 역 안에서 기차 간식 구매</div>
+          <div class="tl-chips"><span class="chip chip-travel">Subway Line 4 · 3 min · 4호선 3분</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-time"><span class="tl-time-en">~3:30 PM</span><span class="tl-time-kr">오후 3시 30분</span></div>
+        <div class="tl-line-col"><div class="tl-dot red"></div></div>
+        <div class="tl-content">
+          <div class="tl-title-en">KTX Departs — Seoul Station → Jinju</div>
+          <div class="tl-title-kr">KTX 출발 — 서울역 → 진주역</div>
+          <div class="tl-note">~3 hr 20 min · arrive Jinju ~7:00 PM · taxi to Sacheon ~25 min · 약 3시간 20분 · 진주 도착 후 택시로 사천 이동 25분</div>
+          <div class="tl-chips"><span class="chip chip-key">Book at letskorail.com · 레츠코레일에서 예매</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- HOTELS -->
+  <div class="section-head">
+    <span class="section-en">Where to Stay</span>
+    <span class="section-kr">숙소 옵션</span>
+  </div>
+
+  <div style="font-size:12px;color:var(--gray);margin-bottom:20px;">All options in Myeongdong · 명동 · 2 nights (Apr 27–29) · Seoul Station 3 min by subway · 서울역 지하철 3분</div>
+
+  <div class="hotel-grid">
+
+    <div class="hotel-card featured">
+      <span class="hotel-badge">Top Pick · 추천</span>
+      <div class="hotel-name-en">Lotte City Hotel Myeongdong</div>
+      <div class="hotel-name-kr">롯데시티호텔 명동</div>
+      <div class="hotel-price">CA $215–250 <span>/ night</span></div>
+      <div class="hotel-details">
+        <div class="hotel-detail"><span class="hotel-detail-key">To Seoul Station</span><span class="hotel-detail-val">🚇 3 min</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">서울역까지</span><span class="hotel-detail-val">지하철 3분</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">To Namsan Tower</span><span class="hotel-detail-val">🚶 20 min</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">Airport bus</span><span class="hotel-detail-val">Right outside</span></div>
+      </div>
+      <div class="hotel-perks">
+        <span class="perk gold">Best location</span>
+        <span class="perk gold">Proper couple rooms</span>
+        <span class="perk">Luggage storage</span>
+        <span class="perk">Street food at door</span>
+        <span class="perk">Late checkout option</span>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <span class="hotel-badge gray">Mid-range · 중간 가격대</span>
+      <div class="hotel-name-en">Solaria Nishitetsu Seoul Myeongdong</div>
+      <div class="hotel-name-kr">솔라리아 니시테쓰 호텔 서울 명동</div>
+      <div class="hotel-price">CA $135–170 <span>/ night</span></div>
+      <div class="hotel-details">
+        <div class="hotel-detail"><span class="hotel-detail-key">To Seoul Station</span><span class="hotel-detail-val">🚇 3 min</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">서울역까지</span><span class="hotel-detail-val">지하철 3분</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">Rooms</span><span class="hotel-detail-val">Comfortable, modern</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">Reviews</span><span class="hotel-detail-val">Consistently high</span></div>
+      </div>
+      <div class="hotel-perks">
+        <span class="perk">Great value</span>
+        <span class="perk">Same area</span>
+        <span class="perk">Modern rooms</span>
+        <span class="perk">Luggage storage</span>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <span class="hotel-badge gray">Budget · 저렴한 옵션</span>
+      <div class="hotel-name-en">Step Inn Myeongdong 1</div>
+      <div class="hotel-name-kr">스텝인 명동 1</div>
+      <div class="hotel-price">CA $96 <span>/ night</span></div>
+      <div class="hotel-details">
+        <div class="hotel-detail"><span class="hotel-detail-key">To Seoul Station</span><span class="hotel-detail-val">🚇 3 min</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">서울역까지</span><span class="hotel-detail-val">지하철 3분</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">Room size</span><span class="hotel-detail-val">Small — budget style</span></div>
+        <div class="hotel-detail"><span class="hotel-detail-key">Best for</span><span class="hotel-detail-val">Sleep only</span></div>
+      </div>
+      <div class="hotel-perks">
+        <span class="perk">Cheapest option</span>
+        <span class="perk">Perfect location</span>
+        <span class="perk">Fine for 2 nights</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KTX -->
+  <hr class="section-divider">
+
+  <div class="section-head">
+    <span class="section-en">KTX Train</span>
+    <span class="section-kr">KTX 기차</span>
+  </div>
+
+  <div class="ktx-box">
+    <div class="ktx-label">High Speed Rail · 고속철도</div>
+    <div class="ktx-route">Seoul Station → Jinju Station</div>
+    <div class="ktx-route-kr">서울역 → 진주역 · 화요일 4월 29일</div>
+    <div class="ktx-grid">
+      <div>
+        <div class="ktx-stat-key">Depart · 출발</div>
+        <div class="ktx-stat-val">~3:30 PM</div>
+      </div>
+      <div>
+        <div class="ktx-stat-key">Travel time · 소요시간</div>
+        <div class="ktx-stat-val">~3h 20m</div>
+      </div>
+      <div>
+        <div class="ktx-stat-key">Arrive · 도착</div>
+        <div class="ktx-stat-val">~7:00 PM</div>
+      </div>
+      <div>
+        <div class="ktx-stat-key">Price · 가격</div>
+        <div class="ktx-stat-val">₩65–75k</div>
+      </div>
+      <div>
+        <div class="ktx-stat-key">Jinju → Sacheon</div>
+        <div class="ktx-stat-val">Taxi 25 min</div>
+      </div>
+      <div>
+        <div class="ktx-stat-key">Hotel → Station</div>
+        <div class="ktx-stat-val">3 min subway</div>
+      </div>
+    </div>
+    <div class="ktx-note">
+      <strong>Book now at letskorail.com</strong> — Jinju trains have limited seats and sell out. Search Seoul → Jinju, Apr 29. Pick seats together (window + aisle same row). Arrive station 30 min early.<br>
+      <strong>레츠코레일(letskorail.com)에서 지금 예매하세요</strong> — 진주행 기차는 좌석이 한정되어 있습니다. 4월 29일 서울→진주 검색. 나란히 앉는 좌석 선택.
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <strong>Book in this order · 예약 순서:</strong><br>
+    1. KTX on letskorail.com (do this first — sells out) · KTX 먼저 예매<br>
+    2. Hotel on Expedia or Booking.com · 호텔 예약<br>
+    3. Hanbok rental — Oneday Hanbok or Hanboknam, Mon 9am slot · 한복 대여 예약 (월요일 오전 9시)
+  </div>
+
+</div>
+
+</body>
+</html>
